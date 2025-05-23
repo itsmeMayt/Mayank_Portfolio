@@ -81,7 +81,7 @@ export default function AboutSection() {
           <motion.div variants={itemVariants} className="mb-16">
             <h3 className="heading-3 mb-8 text-center">Experience</h3>
             <div className="space-y-8">
-              {experiences.map((exp, index) => (
+              {experiences.map((exp) => (
                 <motion.div
                   key={exp.year}
                   className="relative pl-8 border-l-2 border-primary"
