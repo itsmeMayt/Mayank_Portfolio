@@ -1,95 +1,118 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { FaCamera, FaEdit } from 'react-icons/fa'
+import { useInView } from 'react-intersection-observer'
 
-const skills = [
-  {
-    title: 'Video Editing',
-    description: 'Professional video editing with Adobe Premiere Pro and After Effects',
-    icon: <FaEdit className="text-4xl text-primary" />
-  },
-  {
-    title: 'Cinematography',
-    description: 'Capturing stunning visuals with advanced camera techniques',
-    icon: <FaCamera className="text-4xl text-primary" />
-  }
-]
-
-const timeline = [
+const experiences = [
   {
     year: '2023',
     title: 'Senior Video Editor',
     company: 'Creative Studios',
-    description: 'Leading video production for major clients'
+    description: 'Leading video production for major brand campaigns'
   },
   {
     year: '2022',
-    title: 'Video Editor',
-    company: 'Digital Media Agency',
-    description: 'Created engaging content for social media platforms'
+    title: 'Freelance Editor',
+    company: 'Independent',
+    description: 'Working with diverse clients on various video projects'
   },
   {
     year: '2021',
-    title: 'Freelance Editor',
-    company: 'Self-employed',
-    description: 'Worked with various clients on diverse projects'
+    title: 'Junior Editor',
+    company: 'Media House',
+    description: 'Started journey in professional video editing'
   }
 ]
 
+const tools = [
+  { name: 'Adobe Premiere Pro', icon: '🎬' },
+  { name: 'After Effects', icon: '✨' },
+  { name: 'DaVinci Resolve', icon: '🎨' },
+  { name: 'Photoshop', icon: '🖼️' },
+  { name: 'Illustrator', icon: '✏️' },
+  { name: 'Audition', icon: '🎧' }
+]
+
 export default function AboutSection() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  })
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  }
+
   return (
     <section className="section bg-dark">
       <div className="container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          ref={ref}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          variants={containerVariants}
         >
-          <h2 className="heading-2 mb-12 text-center">About Me</h2>
+          <motion.div variants={itemVariants} className="text-center mb-16">
+            <h2 className="heading-2 mb-6">About Me</h2>
+            <p className="text-xl text-light-dim max-w-2xl mx-auto">
+              A passionate video editor and filmmaker with a keen eye for storytelling
+              and a love for creating engaging visual content.
+            </p>
+          </motion.div>
 
-          {/* Skills */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {skills.map((skill) => (
-              <motion.div
-                key={skill.title}
-                whileHover={{ scale: 1.02 }}
-                className="p-6 rounded-lg bg-dark-light"
-              >
-                <div className="mb-4">{skill.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{skill.title}</h3>
-                <p className="text-light-dim">{skill.description}</p>
-              </motion.div>
-            ))}
-          </div>
+          {/* Experience Timeline */}
+          <motion.div variants={itemVariants} className="mb-16">
+            <h3 className="heading-3 mb-8 text-center">Experience</h3>
+            <div className="space-y-8">
+              {experiences.map((exp, index) => (
+                <motion.div
+                  key={exp.year}
+                  className="relative pl-8 border-l-2 border-primary"
+                  variants={itemVariants}
+                >
+                  <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary" />
+                  <div className="mb-2 text-primary font-bold">{exp.year}</div>
+                  <h4 className="text-xl font-bold mb-1">{exp.title}</h4>
+                  <div className="text-light-dim mb-2">{exp.company}</div>
+                  <p className="text-light-dim">{exp.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
-          {/* Timeline */}
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-primary/20" />
-            {timeline.map((item) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="relative mb-8"
-              >
-                <div className="flex items-center">
-                  <div className="w-1/2 pr-8 text-right">
-                    <h3 className="text-xl font-bold">{item.title}</h3>
-                    <p className="text-primary">{item.company}</p>
-                    <p className="text-light-dim">{item.description}</p>
-                  </div>
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-primary" />
-                  <div className="w-1/2 pl-8">
-                    <span className="text-2xl font-bold text-primary">{item.year}</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          {/* Tools & Skills */}
+          <motion.div variants={itemVariants}>
+            <h3 className="heading-3 mb-8 text-center">Tools & Skills</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {tools.map((tool) => (
+                <motion.div
+                  key={tool.name}
+                  className="bg-dark-lighter p-4 rounded-lg text-center"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="text-2xl mb-2">{tool.icon}</div>
+                  <div className="font-medium">{tool.name}</div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
