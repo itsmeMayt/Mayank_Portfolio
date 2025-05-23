@@ -109,7 +109,7 @@ export default function ContactSection() {
               className="space-y-8"
             >
               <div>
-                <h3 className="text-xl font-bold mb-4">Let's Work Together</h3>
+                <h3 className="text-xl font-bold mb-4">Let&apos;s Work Together</h3>
                 <p className="text-light-dim mb-8">
                   Let&apos;s create something amazing together. Whether you&apos;re looking for a video editor
                   or have a project in mind, I&apos;d love to hear from you.
