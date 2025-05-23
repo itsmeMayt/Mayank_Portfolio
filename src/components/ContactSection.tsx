@@ -110,9 +110,9 @@ export default function ContactSection() {
             >
               <div>
                 <h3 className="text-xl font-bold mb-4">Let's Work Together</h3>
-                <p className="text-light-dim">
-                  I'm always open to discussing new projects, creative ideas, or
-                  opportunities to be part of your vision.
+                <p className="text-light-dim mb-8">
+                  Let&apos;s create something amazing together. Whether you&apos;re looking for a video editor
+                  or have a project in mind, I&apos;d love to hear from you.
                 </p>
               </div>
 
