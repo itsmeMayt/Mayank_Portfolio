@@ -10,11 +10,45 @@ export default function ContactSection() {
     email: '',
     message: ''
   })
+  const [status, setStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Add form submission logic here
-    console.log('Form submitted:', formData)
+    setIsSubmitting(true)
+    setStatus({ type: null, message: '' })
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setStatus({
+          type: 'success',
+          message: 'Message sent successfully! I will get back to you soon.'
+        })
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        throw new Error(data.message || 'Something went wrong')
+      }
+    } catch (error) {
+      setStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Failed to send message. Please try again.'
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -91,11 +125,22 @@ export default function ContactSection() {
                   />
                 </div>
 
+                {status.message && (
+                  <div
+                    className={`p-4 rounded-md ${
+                      status.type === 'success' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'
+                    }`}
+                  >
+                    {status.message}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   className="btn btn-primary w-full"
+                  disabled={isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </motion.div>

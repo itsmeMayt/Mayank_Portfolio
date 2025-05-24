@@ -52,17 +52,14 @@ export default function Home() {
 
       {/* Landing Section */}
       <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Video */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/background.mp4" type="video/mp4" />
-          </video>
+          <div 
+            className="w-full h-full bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: 'url("/images/hero-bg.png")',
+            }}
+          />
           <div className="absolute inset-0 bg-dark/70 backdrop-blur-sm" />
         </div>
 
@@ -74,7 +71,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="heading-1 mb-6">
-              <span className="text-primary">Mayank</span> T
+              <span className="text-primary">Cinemayank</span>
             </h1>
             <p className="text-xl md:text-2xl text-light-dim mb-8">
               Video Editor | Filmmaker | Creative Nerd
