@@ -165,7 +165,7 @@ export default function ContactSection() {
                 <h3 className="text-xl font-bold mb-4">Connect With Me</h3>
                 <div className="flex space-x-4">
                   <a
-                    href="https://instagram.com"
+                    href="https://instagram.com/_cinemayank"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-2xl hover:text-primary transition-colors"
@@ -173,7 +173,7 @@ export default function ContactSection() {
                     <FaInstagram />
                   </a>
                   <a
-                    href="https://youtube.com"
+                    href="https://www.youtube.com/@DistractedMindsProductions"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-2xl hover:text-primary transition-colors"
@@ -189,7 +189,7 @@ export default function ContactSection() {
                     <FaLinkedin />
                   </a>
                   <a
-                    href="mailto:contact@example.com"
+                    href="mailto:workwithcinemayank@gmail.com"
                     className="text-2xl hover:text-primary transition-colors"
                   >
                     <FaEnvelope />
