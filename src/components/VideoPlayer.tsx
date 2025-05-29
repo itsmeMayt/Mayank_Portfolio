@@ -35,6 +35,14 @@ export default function VideoPlayer({ isOpen, onClose, videoUrl, title }: VideoP
         return `https://drive.google.com/file/d/${fileId}/preview`
       }
     }
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+      const videoId = url.includes('youtube.com') 
+        ? url.split('v=')[1]?.split('?')[0]
+        : url.split('be/')[1]?.split('?')[0]
+      if (videoId) {
+        return `https://www.youtube.com/embed/${videoId}`
+      }
+    }
     return url
   }
 
@@ -64,11 +72,11 @@ export default function VideoPlayer({ isOpen, onClose, videoUrl, title }: VideoP
             <div className="absolute top-4 left-4 z-10">
               <h3 className="text-white text-xl font-bold">{title}</h3>
             </div>
-            {videoUrl.includes('drive.google.com') ? (
+            {(videoUrl.includes('drive.google.com') || videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) ? (
               <iframe
                 src={getEmbedUrl(videoUrl)}
                 className="w-full h-full"
-                allow="autoplay"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             ) : (
