@@ -21,16 +21,16 @@ interface Video {
 const videos: Video[] = [
   {
     id: '1',
-    title: 'Portfolio Showcase',
-    description: 'A collection of my best video editing and filmmaking work, showcasing various styles and techniques.',
-    thumbnail: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=60',
-    videoUrl: 'https://drive.google.com/file/d/1RClCSB8PwKiiIO3O9YiBrTQu9MXKd9in/view',
-    category: 'Portfolio'
+    title: 'Motion Ad for brand',
+    description: 'A dynamic motion graphics advertisement showcasing cutting-edge technology with sleek animations and modern design elements.',
+    thumbnail: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&auto=format&fit=crop&q=60',
+    videoUrl: 'https://cht36xxrzycrr1fo.public.blob.vercel-storage.com/Videos/iris_ad_final-yxm7pO07xSG1bHy78nLds7euMNBFFN.mp4',
+    category: 'Motion Graphics'
   },
   {
     id: '2',
-    title: 'Product Launch Campaign',
-    description: 'Dynamic product showcase with modern transitions and engaging visuals for a tech startup.',
+    title: 'Brand Promotion Video',
+    description: 'A dynamic motion graphics advertisement showcasing cutting-edge technology with sleek animations and modern design elements.',
     thumbnail: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=800&auto=format&fit=crop&q=60',
     videoUrl: '/videos/background.mp4',
     category: 'Commercial'
@@ -72,7 +72,7 @@ const videos: Video[] = [
 export default function VideoShowcase() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
-  const categories = ['All', 'Commercial', 'Short Films', 'College Events', 'Travel', 'Music']
+  const categories = ['All','Motion Graphics','Action','Typography','Events','Short Films','Others']
 
   const filteredVideos = activeCategory === 'All'
     ? videos
