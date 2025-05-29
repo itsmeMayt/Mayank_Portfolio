@@ -31,41 +31,41 @@ const videos: Video[] = [
     id: '2',
     title: 'Brand Promotion Video',
     description: 'A dynamic motion graphics advertisement showcasing cutting-edge technology with sleek animations and modern design elements.',
-    thumbnail: 'https://images.unsplash.com/photo-1550009158-9ebf69173e03?w=800&auto=format&fit=crop&q=60',
+    thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=60',
     videoUrl: '/videos/background.mp4',
-    category: 'Commercial'
+    category: 'Motion Graphics'
   },
   {
     id: '3',
-    title: 'Travel Vlog - Mountains',
-    description: 'Capturing the breathtaking beauty of mountain landscapes with cinematic drone shots.',
-    thumbnail: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop&q=60',
-    videoUrl: '/videos/background.mp4',
-    category: 'Travel'
+    title: 'Motion Intro for a Short Film',
+    description: 'An eye-catching motion graphics intro that sets the tone for the short film with dynamic typography and 3D movements.',
+    thumbnail: 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=800&auto=format&fit=crop&q=60',
+    videoUrl: 'https://cht36xxrzycrr1fo.public.blob.vercel-storage.com/Videos/The%20Lost%20Self%20_%20Short%20Film%20_%20Announcement%20Video-N0FSAmZiLWhO1HGLsfLx1PVCXLJI4B.mp4',
+    category: 'Motion Graphics'
   },
   {
     id: '4',
-    title: 'Music Video - Indie Band',
-    description: 'Creative music video featuring unique transitions and artistic visual effects.',
-    thumbnail: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=60',
-    videoUrl: '/videos/background.mp4',
-    category: 'Music'
+    title: 'Action Edit',
+    description: 'A thrilling action edit showcasing dynamic camera movements.',
+    thumbnail: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&auto=format&fit=crop&q=60',
+    videoUrl: 'https://drive.google.com/file/d/1RClCSB8PwKiiIO3O9YiBrTQu9MXKd9in/view?usp=drive_link',
+    category: 'Action'
   },
   {
     id: '5',
-    title: 'Short Film - The Journey',
+    title: 'Short Film - The Lost Self',
     description: 'A compelling narrative short film exploring themes of self-discovery and growth.',
     thumbnail: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&auto=format&fit=crop&q=60',
-    videoUrl: '/videos/background.mp4',
+    videoUrl: 'https://youtu.be/LSWTg1fYxOw',
     category: 'Short Films'
   },
   {
     id: '6',
-    title: 'Brand Story - Local Cafe',
-    description: 'Heartwarming brand story showcasing the journey of a local cafe and its community impact.',
-    thumbnail: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=60',
-    videoUrl: '/videos/background.mp4',
-    category: 'Commercial'
+    title: 'College Fest Video',
+    description: 'A vibrant and energetic video showcasing the excitement and energy of a college fest.',
+    thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&auto=format&fit=crop&q=60',
+    videoUrl: 'https://cht36xxrzycrr1fo.public.blob.vercel-storage.com/Videos/inci_aip_band-FE0bT4wBMlWlmta6qyAMBUna8MgLHx.mp4',
+    category: 'Events'
   }
 ]
 
