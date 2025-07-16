@@ -18,7 +18,7 @@
   * {
     @apply border-dark-light;
   }
-  body {
+body {
     @apply bg-dark text-light;
   }
 }

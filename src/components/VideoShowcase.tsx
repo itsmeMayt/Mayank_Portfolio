@@ -1,14 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import VideoPlayer from './VideoPlayer'
-import videos from './videoData.json'
 import Image from 'next/image';
 
 interface Video {
@@ -18,12 +17,23 @@ interface Video {
   thumbnail: string;
   videoUrl: string;
   category: string;
+  order?: number;
 }
 
 export default function VideoShowcase() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
+  const [videos, setVideos] = useState<Video[]>([])
   const categories = ['All','Motion Graphics','YT Longform','Documentary','Action','Typography','Events','Short Films','Others']
+
+  useEffect(() => {
+    fetch('/api/videos')
+      .then(res => res.json())
+      .then(data => {
+        // Sort by order if present
+        setVideos(Array.isArray(data) ? data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) : [])
+      })
+  }, [])
 
   const filteredVideos = activeCategory === 'All'
     ? videos

@@ -1,27 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { commitAndPushVideoData } from '@/utils/gitUtils';
+import clientPromise from '@/utils/mongodb';
 
 export async function POST(req: NextRequest) {
   try {
-    const { index, title, description, thumbnail, videoUrl, category } = await req.json();
-    const filePath = path.join(process.cwd(), 'src/components/videoData.json');
-    const fileContent = await fs.readFile(filePath, 'utf-8');
-    const videosArr = JSON.parse(fileContent);
-    videosArr[index] = {
-      ...videosArr[index],
-      title,
-      description,
-      thumbnail,
-      videoUrl,
-      category,
-    };
-    await fs.writeFile(filePath, JSON.stringify(videosArr, null, 2), 'utf-8');
-    try {
-      await commitAndPushVideoData();
-    } catch (gitErr) {
-      console.error('Git commit/push failed:', gitErr);
+    const { id, title, description, thumbnail, videoUrl, category } = await req.json();
+    const client = await clientPromise;
+    const db = client.db();
+    const result = await db.collection('videos').updateOne(
+      { id },
+      { $set: { title, description, thumbnail, videoUrl, category } }
+    );
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ error: 'Video not found' }, { status: 404 });
     }
     return NextResponse.json({ success: true });
   } catch (err: unknown) {

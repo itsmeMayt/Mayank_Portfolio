@@ -20,6 +20,7 @@ interface Video {
   thumbnail: string;
   videoUrl: string;
   category: string;
+  order?: number; // Added order field
 }
 
 export default function AdminPage() {
@@ -35,13 +36,13 @@ export default function AdminPage() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [videos, setVideos] = useState<Video[]>([]);
-  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [editId, setEditId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<typeof form>(form);
 
   useEffect(() => {
     fetch('/api/videos')
       .then(res => res.json())
-      .then(data => setVideos(data));
+      .then(data => setVideos(Array.isArray(data) ? data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) : []));
   }, []);
 
   const handleAuth = (e: React.FormEvent) => {
@@ -75,14 +76,14 @@ export default function AdminPage() {
     if (res.ok) {
       setMessage("Video added and pushed to GitHub!");
       setForm({ title: "", description: "", thumbnail: "", videoUrl: "", category: CATEGORIES[0] });
-      fetch('/api/videos').then(res => res.json()).then(data => setVideos(data));
+      fetch('/api/videos').then(res => res.json()).then(data => setVideos(Array.isArray(data) ? data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) : []));
     } else {
       setMessage(data.error || "Failed to add video");
     }
   };
 
   const handleEdit = (idx: number) => {
-    setEditIndex(idx);
+    setEditId(videos[idx].id);
     setEditForm({
       title: videos[idx].title,
       description: videos[idx].description,
@@ -100,7 +101,7 @@ export default function AdminPage() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        index: editIndex,
+        id: editId,
         ...editForm,
       }),
     });
@@ -108,8 +109,8 @@ export default function AdminPage() {
     setLoading(false);
     if (res.ok) {
       setMessage("Video updated!");
-      setEditIndex(null);
-      fetch('/api/videos').then(res => res.json()).then(data => setVideos(data));
+      setEditId(null);
+      fetch('/api/videos').then(res => res.json()).then(data => setVideos(Array.isArray(data) ? data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) : []));
     } else {
       setMessage(data.error || "Failed to update video");
     }
@@ -122,13 +123,13 @@ export default function AdminPage() {
     const res = await fetch("/api/delete-video", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ index: idx }),
+      body: JSON.stringify({ id: videos[idx].id }),
     });
     const data = await res.json();
     setLoading(false);
     if (res.ok) {
       setMessage("Video deleted!");
-      fetch('/api/videos').then(res => res.json()).then(data => setVideos(data));
+      fetch('/api/videos').then(res => res.json()).then(data => setVideos(Array.isArray(data) ? data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) : []));
     } else {
       setMessage(data.error || "Failed to delete video");
     }
@@ -146,7 +147,7 @@ export default function AdminPage() {
     setLoading(false);
     if (res.ok) {
       setMessage("Order updated!");
-      fetch('/api/videos').then(res => res.json()).then(data => setVideos(data));
+      fetch('/api/videos').then(res => res.json()).then(data => setVideos(Array.isArray(data) ? data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) : []));
     } else {
       setMessage(data.error || "Failed to reorder video");
     }
@@ -259,7 +260,7 @@ export default function AdminPage() {
       </div>
 
       {/* Edit Modal */}
-      {editIndex !== null && (
+      {editId !== null && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <form onSubmit={handleEditSubmit} className="bg-dark-light p-8 rounded shadow-md space-y-4 w-full max-w-md">
             <h2 className="text-xl font-bold mb-4">Edit Video</h2>
@@ -312,7 +313,7 @@ export default function AdminPage() {
               <button type="submit" className="btn btn-primary w-full" disabled={loading}>
                 {loading ? "Saving..." : "Save Changes"}
               </button>
-              <button type="button" className="btn w-full" onClick={() => setEditIndex(null)}>
+              <button type="button" className="btn w-full" onClick={() => setEditId(null)}>
                 Cancel
               </button>
             </div>

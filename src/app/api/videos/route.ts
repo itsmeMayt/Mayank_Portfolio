@@ -1,14 +1,13 @@
+import clientPromise from '@/utils/mongodb';
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'src/components/videoData.json');
-    const fileContent = await fs.readFile(filePath, 'utf-8');
-    const videosArr = JSON.parse(fileContent);
-    return NextResponse.json(videosArr);
-  } catch (err: unknown) {
-    return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 500 });
+    const client = await clientPromise;
+    const db = client.db(); // uses the default DB from your URI
+    const videos = await db.collection('videos').find({}).toArray();
+    return NextResponse.json(videos);
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to fetch videos' }, { status: 500 });
   }
 } 
