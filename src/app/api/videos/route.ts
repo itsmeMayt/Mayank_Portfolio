@@ -8,6 +8,7 @@ export async function GET() {
     const videos = await db.collection('videos').find({}).toArray();
     return NextResponse.json(videos);
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: 'Failed to fetch videos' }, { status: 500 });
   }
 } 
