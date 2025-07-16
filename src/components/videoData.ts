@@ -96,7 +96,7 @@ export const videos: Video[] = [
     videoUrl: 'https://cht36xxrzycrr1fo.public.blob.vercel-storage.com/Videos/inci_aip_band-FE0bT4wBMlWlmta6qyAMBUna8MgLHx.mp4',
     category: 'Events'
   },
-,
+
   {
     "id": "07feff9b-9a82-4ce7-bdd0-72aa55df75cf",
     "title": "Documentary Sample",
@@ -104,12 +104,5 @@ export const videos: Video[] = [
     "thumbnail": "https://images.unsplash.com/photo-1528041119984-da3a9f8d04d1?q=80&w=1409&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "videoUrl": "https://drive.google.com/file/d/1XBgjT-ViIUuL9MzPICsMsf6Afw_yON8d/view",
     "category": "Documentary"
-  },
-  {
-    "id": "f84c508e-2b50-4851-9431-777119cef094",
-    "title": "Documentary - Sample",
-    "description": "history of USA sample documentary style",
-    "thumbnail": "https://images.unsplash.com/photo-1560747165-bccaec0a914f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "videoUrl": "https://drive.google.com/file/d/1q3Sm6yP9cwZRw8PoEifpaLMHyLEExGEW/view?usp=sharing",
-    "category": "Documentary"
-  }] 
+  }
+] 
