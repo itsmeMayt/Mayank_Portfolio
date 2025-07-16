@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     const { index, direction } = await req.json();
     const filePath = path.join(process.cwd(), 'src/components/videoData.json');
     const fileContent = await fs.readFile(filePath, 'utf-8');
-    let videosArr = JSON.parse(fileContent);
+    const videosArr = JSON.parse(fileContent);
     const newIndex = index + direction;
     if (newIndex < 0 || newIndex >= videosArr.length) throw new Error('Invalid move');
     [videosArr[index], videosArr[newIndex]] = [videosArr[newIndex], videosArr[index]];
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       console.error('Git commit/push failed:', gitErr);
     }
     return NextResponse.json({ success: true });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: err instanceof Error ? err.message : String(err) }, { status: 500 });
   }
 } 

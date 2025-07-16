@@ -9,6 +9,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import VideoPlayer from './VideoPlayer'
 import videos from './videoData.json'
+import Image from 'next/image';
 
 interface Video {
   id: string;
@@ -78,10 +79,13 @@ export default function VideoShowcase() {
                   onClick={() => setSelectedVideo(video)}
                 >
                   <div className="aspect-video rounded-lg overflow-hidden bg-dark">
-                    <img
+                    <Image
                       src={video.thumbnail}
                       alt={video.title}
+                      fill
                       className="w-full h-full object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      priority={false}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="absolute bottom-0 p-4">
