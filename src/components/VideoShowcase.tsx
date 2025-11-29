@@ -9,6 +9,8 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import VideoPlayer from './VideoPlayer'
 import Image from 'next/image';
+import videoData from './videoData.json';
+
 
 interface Video {
   id: string;
@@ -23,21 +25,34 @@ interface Video {
 export default function VideoShowcase() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
-  const [videos, setVideos] = useState<Video[]>([])
+  const [videos, setVideos] = useState<Video[]>(videoData as Video[])
   const categories = ['All','Motion Graphics','YT Longform','Documentary','Action','Typography','Events','Short Films','Others']
 
   useEffect(() => {
+    // Try to fetch from API and update if successful
     fetch('/api/videos')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`API returned ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
-        // Sort by order if present
-        setVideos(Array.isArray(data) ? data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) : [])
+        if (Array.isArray(data) && data.length > 0) {
+          // Sort by order if present
+          const sortedVideos = data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+          setVideos(sortedVideos);
+        }
+      })
+      .catch(error => {
+        console.error('Failed to fetch videos from API, keeping local data:', error);
       })
   }, [])
 
   const filteredVideos = activeCategory === 'All'
     ? videos
     : videos.filter(video => video.category === activeCategory)
+
 
   return (
     <section className="section bg-dark-lighter">
@@ -67,47 +82,56 @@ export default function VideoShowcase() {
             ))}
           </div>
 
+
           {/* Video Carousel */}
-          <Swiper
-            modules={[Navigation, Pagination]}
-            spaceBetween={24}
-            slidesPerView={1}
-            navigation
-            pagination={{ clickable: true }}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-              1280: { slidesPerView: 4 },
-            }}
-            className="video-carousel"
-          >
-            {filteredVideos.map((video) => (
-              <SwiperSlide key={video.id}>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="relative group cursor-pointer"
-                  onClick={() => setSelectedVideo(video)}
-                >
-                  <div className="aspect-video rounded-lg overflow-hidden bg-dark">
-                    <Image
-                      src={video.thumbnail}
-                      alt={video.title}
-                      fill
-                      className="w-full h-full object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      priority={false}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="absolute bottom-0 p-4">
-                        <h3 className="text-lg font-bold mb-2">{video.title}</h3>
-                        <p className="text-sm text-light-dim">{video.description}</p>
+          {filteredVideos.length > 0 ? (
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={24}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                1280: { slidesPerView: 4 },
+              }}
+              className="video-carousel"
+            >
+              {filteredVideos.map((video) => (
+                <SwiperSlide key={video.id}>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="relative group cursor-pointer"
+                    onClick={() => setSelectedVideo(video)}
+                  >
+                    <div className="aspect-video rounded-lg overflow-hidden bg-dark relative">
+                      <Image
+                        src={video.thumbnail}
+                        alt={video.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        priority={false}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute bottom-0 p-4">
+                          <h3 className="text-lg font-bold mb-2">{video.title}</h3>
+                          <p className="text-sm text-light-dim">{video.description}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                  </motion.div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-light-dim text-lg">
+                {videos.length === 0 ? 'Loading videos...' : `No videos found in ${activeCategory} category`}
+              </p>
+            </div>
+          )}
         </motion.div>
       </div>
 

@@ -76,3 +76,25 @@ body {
   @apply fixed w-8 h-8 rounded-full border-2 border-primary pointer-events-none z-50 mix-blend-difference;
   transform: translate(-50%, -50%);
 }
+
+/* Swiper custom styles */
+.video-carousel {
+  @apply w-full;
+}
+
+.video-carousel .swiper-slide {
+  @apply h-auto;
+}
+
+.video-carousel .swiper-button-next,
+.video-carousel .swiper-button-prev {
+  @apply text-primary;
+}
+
+.video-carousel .swiper-pagination-bullet {
+  @apply bg-primary;
+}
+
+.video-carousel .swiper-pagination-bullet-active {
+  @apply bg-primary-dark;
+}
