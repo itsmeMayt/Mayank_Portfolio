@@ -1,4 +1,3 @@
-import clientPromise from '@/utils/mongodb';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -10,6 +9,8 @@ export async function GET() {
   return NextResponse.json([]);
   
   /* MongoDB code - uncomment when connection is fixed
+  // First, add: import clientPromise from '@/utils/mongodb'; at the top of the file
+  
   try {
     console.log('API: Attempting to connect to MongoDB...');
     
